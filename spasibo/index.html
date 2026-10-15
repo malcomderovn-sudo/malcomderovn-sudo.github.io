@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="/assets/fonts/fonts.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Страница-подтверждение: цель Метрики Ц1 (zayavka_forma) срабатывает на визите сюда.
+     От индексации закрыта — thank-you страница в выдачу не нужна. -->
+<meta name="robots" content="noindex, nofollow">
+<title>Заявка принята — Услуги · Махачкала</title>
+<meta name="description" content="Заявка сформирована. Отправьте её в WhatsApp — ответим за 10 минут в рабочее время.">
+<link rel="stylesheet" href="/assets/style.css">
+<style>
+  .done-card { max-width: 640px; }
+  .done-ico {
+    width: 56px; height: 56px; border-radius: 50%;
+    background: var(--wa); color: #fff; display: grid; place-items: center;
+    font-size: 28px; margin-bottom: var(--s-3);
+  }
+  .task-quote {
+    background: var(--surface-2); border-left: 4px solid var(--ink);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    padding: var(--s-3) var(--s-4); margin-bottom: var(--s-4);
+    font-size: 17px; white-space: pre-wrap;
+  }
+  .promo-note {
+    background: var(--accent-bg); border: 1px solid rgba(213,58,32,.3);
+    color: var(--accent-ink); border-radius: var(--radius-sm);
+    padding: var(--s-3) var(--s-4); margin-bottom: var(--s-4);
+    font-size: 17px;
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="container header-inner">
+    <a class="wordmark" href="/">
+      <span class="wordmark-name">Услуги · Махачкала</span>
+      <span class="wordmark-desc">печать · техника · подписки</span>
+    </a>
+    <nav class="nav-desktop" aria-label="Основное меню">
+      <a href="/uslugi/">Услуги</a>
+      <a href="/digital/">Цифровые услуги</a>
+      <a href="/#kontakty">Контакты</a>
+    </nav>
+    <div class="header-actions">
+      <a class="btn btn-secondary btn-call" href="tel:+79285881987" aria-label="Позвонить">
+        <span aria-hidden="true">📞</span>
+        <span class="label-full">Позвонить</span><span class="label-short">Звонок</span>
+      </a>
+      <a class="btn btn-primary" href="https://wa.me/79285881987" target="_blank" rel="noopener">WhatsApp</a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="section">
+    <div class="container">
+      <div class="card form-card done-card">
+        <div class="done-ico" aria-hidden="true">✓</div>
+        <h1 style="font-size: clamp(26px, 6vw, 40px);">Заявка принята</h1>
+        <p class="section-sub">Спасибо! Ответим за 10 минут в рабочее время —
+          позвоним или напишем с этого же номера.</p>
+
+        <p class="promo-note" id="spasibo-promo" hidden>
+          Промокод <b>QR10</b> принят — скидка 10% на первый заказ.
+        </p>
+
+        <p><b>Ваша задача:</b></p>
+        <div class="task-quote" id="spasibo-task">Заявка с сайта</div>
+
+        <!-- Основной способ доставки заявки владельцу на статическом хостинге:
+             сообщение собрано из формы, отправляется одной кнопкой в WhatsApp. -->
+        <a class="btn btn-primary" id="wa-send"
+           href="https://wa.me/79285881987" target="_blank" rel="noopener"
+           style="width: 100%;">Отправить заявку в WhatsApp</a>
+        <p class="form-note">Кнопка откроет WhatsApp с уже набранным текстом заявки —
+          нажмите «Отправить». Это займёт секунду.</p>
+
+        <div class="btn-row" style="margin-top: var(--s-4);">
+          <a class="btn btn-secondary" href="/uslugi/">Пока смотрю цены</a>
+          <a class="btn btn-secondary" href="tel:+79285881987">Позвонить</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-bottom" style="margin-top: 0; padding-top: 0; border-top: 0;">
+      <span>© 2026 Услуги · Махачкала</span>
+      <span>Цены на сайте действительны в день обращения.</span>
+    </div>
+  </div>
+</footer>
+
+  <script src="/assets/site.js" defer></script>
+</body>
+</html>

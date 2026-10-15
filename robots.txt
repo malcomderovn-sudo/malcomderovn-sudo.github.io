@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /spasibo/
+
+Sitemap: https://uslugi-mahachkala.ru/sitemap.xml

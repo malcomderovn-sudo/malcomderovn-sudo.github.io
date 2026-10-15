@@ -1,0 +1,597 @@
+/* =========================================================================
+   УСЛУГИ · МАХАЧКАЛА — общая дизайн-система (этап 2 «Дизайн», макеты)
+   Полная спецификация — design-system.md. Этот файл — источник стилей
+   для макетов index.html / uslugi.html / landing.html.
+   ========================================================================= */
+
+/* --- 1. ТОКЕНЫ ---------------------------------------------------------- */
+:root {
+  /* Палитра «бумага и тонер» */
+  --paper:      #FBF7F0;  /* фон страницы — тёплая бумага */
+  --surface:    #FFFFFF;  /* карточки, поля */
+  --surface-2:  #F3EDE1;  /* подложки, чередующиеся строки таблиц */
+  --ink:        #191512;  /* основной текст — тёплый чёрный */
+  --ink-2:      #5C554B;  /* вторичный текст (контраст ≥ 6:1 к бумаге) */
+  --line:       #E4DCCE;  /* границы */
+  --line-2:     #CFC4B0;  /* границы потолще */
+
+  --accent:     #D33A20;  /* тонерный красный: цены, акценты */
+  --accent-ink: #A82A13;  /* его тёмная версия для мелкого текста */
+  --accent-bg:  #FBEAE4;  /* подложка акцента */
+
+  --wa:         #12864A;  /* WhatsApp-зелёный (кнопка заказа) */
+  --wa-hover:   #0E6E3C;
+
+  /* CMYK — фирменная полоса-подпись (только декор, не для текста) */
+  --cmyk-c: #009FDC;
+  --cmyk-m: #DB0F7B;
+  --cmyk-y: #F5C400;
+  --cmyk-k: #191512;
+
+  /* Типографика */
+  --font-display: 'Rubik', system-ui, sans-serif;      /* заголовки */
+  --font-body: 'Commissioner', system-ui, sans-serif;  /* текст, UI */
+
+  /* Сетка отступов — 8px */
+  --s-1: 4px;  --s-2: 8px;  --s-3: 16px; --s-4: 24px;
+  --s-5: 32px; --s-6: 48px; --s-7: 64px; --s-8: 96px;
+
+  --radius:    14px;   /* карточки */
+  --radius-sm: 10px;   /* поля ввода */
+  --radius-pill: 999px;
+
+  --container: 1120px;
+  --shadow-1: 0 1px 2px rgba(25,21,18,.06), 0 4px 16px rgba(25,21,18,.06);
+  --shadow-2: 0 2px 4px rgba(25,21,18,.08), 0 12px 32px rgba(25,21,18,.10);
+}
+
+/* --- 2. БАЗА ------------------------------------------------------------ */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 18px;          /* база 18px: читается взрослым человеком без зума */
+  line-height: 1.55;
+  font-weight: 400;
+}
+
+img, svg { max-width: 100%; display: block; }
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  margin: 0 0 var(--s-3);
+  text-wrap: balance;
+}
+h1 { font-size: clamp(32px, 7.5vw, 56px); font-weight: 800; }
+h2 { font-size: clamp(26px, 5.5vw, 40px); font-weight: 700; }
+h3 { font-size: clamp(20px, 4vw, 24px); }
+
+p { margin: 0 0 var(--s-3); max-width: 65ch; }
+a { color: var(--accent-ink); }
+
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--s-3);
+}
+@media (min-width: 960px) { .container { padding-inline: var(--s-5); } }
+
+.section { padding-block: var(--s-6); }
+@media (min-width: 960px) { .section { padding-block: var(--s-7); } }
+
+.section-head { margin-bottom: var(--s-5); }
+.section-sub {
+  font-size: clamp(18px, 3.5vw, 21px);
+  color: var(--ink-2);
+  max-width: 60ch;
+}
+
+/* Метка-надзаголовок секции */
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--font-display);
+  font-size: 13px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: .14em;
+  color: var(--ink-2);
+  margin-bottom: var(--s-3);
+}
+.eyebrow::before {
+  content: ""; width: 28px; height: 4px; border-radius: 2px;
+  background: linear-gradient(90deg, var(--cmyk-c) 0 25%, var(--cmyk-m) 25% 50%, var(--cmyk-y) 50% 75%, var(--cmyk-k) 75% 100%);
+}
+
+/* Служебная полоса CMYK — фирменный знак (декор) */
+.cmyk-stripe {
+  height: 6px; border: 0; margin: 0;
+  background: linear-gradient(90deg, var(--cmyk-c) 0 25%, var(--cmyk-m) 25% 50%, var(--cmyk-y) 50% 75%, var(--cmyk-k) 75% 100%);
+}
+
+/* Заполнители фактов владельца — видно, что подставить */
+.ph {
+  background: var(--accent-bg);
+  border-bottom: 2px dashed var(--accent);
+  padding: 0 4px;
+  border-radius: 4px 4px 0 0;
+}
+
+.small, .fineprint { font-size: 15px; color: var(--ink-2); }
+.fineprint { max-width: 70ch; }
+
+/* --- 3. КНОПКИ ---------------------------------------------------------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 56px;                       /* цель касания ≥ 56px */
+  padding: 14px 26px;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-display);
+  font-size: 19px; font-weight: 600;
+  line-height: 1.2;
+  text-align: center; text-decoration: none;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: transform .15s ease, box-shadow .15s ease, background-color .15s ease, border-color .15s ease;
+}
+.btn:active { transform: translateY(1px); }
+.btn:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+/* Основная — WhatsApp */
+.btn-primary { background: var(--wa); color: #fff; box-shadow: var(--shadow-1); }
+.btn-primary:hover { background: var(--wa-hover); box-shadow: var(--shadow-2); }
+
+/* Вторичная — контур */
+.btn-secondary { background: transparent; color: var(--ink); border-color: var(--ink); }
+.btn-secondary:hover { background: var(--ink); color: var(--paper); }
+
+/* Инверсная — на тёмном фоне */
+.btn-invert { background: var(--paper); color: var(--ink); }
+.btn-invert:hover { background: #fff; }
+
+.btn-link {          /* текстовая-ссылка со стрелкой */
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--font-display); font-weight: 600; font-size: 17px;
+  color: var(--accent-ink); text-decoration: none;
+  min-height: 44px;
+}
+.btn-link::after { content: "→"; transition: transform .15s ease; }
+.btn-link:hover::after { transform: translateX(4px); }
+
+.btn-row { display: flex; flex-wrap: wrap; gap: var(--s-3); }
+.btn-row .btn { flex: 1 1 240px; }        /* на телефоне кнопки в столбик, крупные */
+
+/* --- 4. ШАПКА (липкая) -------------------------------------------------- */
+.header {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(251,247,240,.94);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--line);
+}
+.header-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: var(--s-3);
+  min-height: 68px;
+  padding-block: var(--s-2);
+}
+
+.wordmark { text-decoration: none; color: var(--ink); display: block; }
+.wordmark-name {
+  font-family: var(--font-display); font-weight: 800; font-size: 21px;
+  letter-spacing: -0.01em; display: block; line-height: 1.1;
+}
+.wordmark-desc {
+  display: block; font-size: 12.5px; color: var(--ink-2);
+  letter-spacing: .04em; margin-top: 2px;
+}
+
+.header-actions { display: flex; align-items: center; gap: var(--s-2); flex: none; }
+.header-actions .btn { min-height: 46px; padding: 8px 18px; font-size: 16px; }
+/* Телефон в шапке на мобиле — только иконка (текст скрыт, но остаётся
+   доступным для скринридеров через aria-label; номер — в подвале) */
+.btn-call .label-full, .btn-call .label-short { display: none; }
+.btn-call { padding: 8px 14px; }
+@media (min-width: 600px) {
+  .btn-call .label-full { display: inline; }
+  .btn-call { padding: 8px 18px; }
+}
+/* На узких экранах вордмарк ужимается, дескриптор прячется */
+@media (max-width: 599px) {
+  .wordmark { min-width: 0; }
+  .wordmark-name { font-size: 17px; }
+  .wordmark-desc { font-size: 11.5px; }
+}
+
+.nav-desktop { display: none; }
+@media (min-width: 960px) {
+  .nav-desktop {
+    display: flex; gap: var(--s-5);
+    font-family: var(--font-display); font-weight: 600; font-size: 17px;
+  }
+  .nav-desktop a { color: var(--ink); text-decoration: none; padding: 8px 0; }
+  .nav-desktop a:hover { color: var(--accent-ink); }
+}
+
+/* --- 5. ГЕРОЙ ----------------------------------------------------------- */
+.hero { padding-block: var(--s-6) var(--s-6); position: relative; overflow: hidden; }
+.hero::after {          /* мягкое свечение «печатного станка» */
+  content: ""; position: absolute; inset: auto -20% -55% 55%; height: 70%;
+  background: radial-gradient(closest-side, rgba(213,58,32,.10), transparent 70%);
+  pointer-events: none;
+}
+.hero > .container { position: relative; z-index: 1; }
+
+.hero-offer {
+  display: inline-block;
+  background: var(--accent-bg);
+  border: 1px solid rgba(213,58,32,.25);
+  color: var(--accent-ink);
+  font-family: var(--font-display); font-weight: 600; font-size: 16px;
+  padding: 8px 16px; border-radius: var(--radius-pill);
+  margin-bottom: var(--s-4);
+}
+.hero-sub {
+  font-size: clamp(19px, 4vw, 24px);
+  color: var(--ink-2);
+  max-width: 55ch;
+  margin-bottom: var(--s-5);
+}
+.hero-sub b { color: var(--ink); font-weight: 600; }
+.hero-reassure {
+  margin-top: var(--s-3);
+  font-size: 16px; color: var(--ink-2);
+  display: flex; align-items: center; gap: 8px;
+}
+.hero-reassure::before { content: "✓"; color: var(--wa); font-weight: 700; }
+
+/* --- 6. КАРТОЧКИ -------------------------------------------------------- */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: var(--s-4);
+  box-shadow: var(--shadow-1);
+}
+
+.reasons-grid { display: grid; gap: var(--s-3); }
+@media (min-width: 760px) { .reasons-grid { grid-template-columns: repeat(3, 1fr); } }
+
+.reason-card { display: flex; gap: var(--s-3); align-items: flex-start; }
+.reason-num {
+  flex: none;
+  font-family: var(--font-display); font-weight: 800; font-size: 15px;
+  width: 34px; height: 34px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: var(--ink); color: var(--paper);
+}
+.reason-card h3 { font-size: 20px; margin-bottom: 6px; }
+.reason-card p { margin: 0; font-size: 16.5px; color: var(--ink-2); }
+
+/* Популярные услуги — крупные ссылки-карточки */
+.popular-grid { display: grid; gap: var(--s-3); }
+@media (min-width: 600px)  { .popular-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 960px)  { .popular-grid { grid-template-columns: repeat(3, 1fr); } }
+
+.service-card {
+  display: flex; align-items: center; justify-content: space-between; gap: var(--s-3);
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: var(--s-4);
+  text-decoration: none; color: var(--ink);
+  min-height: 96px;
+  transition: border-color .15s ease, box-shadow .15s ease, transform .15s ease;
+}
+.service-card:hover { border-color: var(--line-2); box-shadow: var(--shadow-2); transform: translateY(-2px); }
+.service-card:hover .arrow { background: var(--ink); color: var(--paper); transform: translateX(3px); }
+.service-card > span { min-width: 0; }
+.service-name { display: block; font-family: var(--font-display); font-weight: 600; font-size: 19px; line-height: 1.25; }
+.service-price { display: block; margin-top: 6px; font-size: 17px; color: var(--accent-ink); font-weight: 600; white-space: nowrap; }
+.arrow {
+  flex: none; width: 40px; height: 40px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: var(--surface-2); color: var(--ink);
+  font-size: 18px;
+  transition: background-color .15s ease, color .15s ease, transform .15s ease;
+}
+
+/* Сводка каталога — 9 плиток */
+.tiles-grid { display: grid; gap: var(--s-2); grid-template-columns: repeat(2, 1fr); }
+@media (min-width: 760px) { .tiles-grid { grid-template-columns: repeat(3, 1fr); } }
+
+.tile {
+  display: flex; flex-direction: column; justify-content: space-between; gap: var(--s-2);
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: var(--s-3) var(--s-4);
+  text-decoration: none; color: var(--ink);
+  min-height: 92px;
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+.tile:hover { border-color: var(--line-2); box-shadow: var(--shadow-1); }
+/* 9 плиток: последняя одиночная растягивается на всю ширину — без дыры в сетке */
+.tiles-grid > .tile:last-child:nth-child(odd) { grid-column: 1 / -1; }
+.tile-name { font-family: var(--font-display); font-weight: 600; font-size: 17px; line-height: 1.3; }
+.tile-price { font-size: 16px; color: var(--accent-ink); font-weight: 600; }
+
+/* --- 7. ШАГИ ЗАКАЗА ----------------------------------------------------- */
+.steps { display: grid; gap: var(--s-3); counter-reset: step; }
+@media (min-width: 760px) { .steps { grid-template-columns: repeat(3, 1fr); } }
+.step { position: relative; padding-top: var(--s-4); }
+.step::before {
+  counter-increment: step; content: counter(step);
+  position: absolute; top: 0; left: 0;
+  font-family: var(--font-display); font-weight: 800; font-size: 15px;
+  color: var(--accent-ink);
+  background: var(--accent-bg);
+  width: 34px; height: 34px; border-radius: 50%;
+  display: grid; place-items: center;
+}
+.step h3 { font-size: 19px; margin: var(--s-4) 0 6px; }
+.step p { margin: 0; font-size: 16.5px; color: var(--ink-2); }
+
+/* --- 8. ТАБЛИЦА ЦЕН ----------------------------------------------------- */
+.table-wrap {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+table.prices { width: 100%; border-collapse: collapse; font-size: 17px; }
+table.prices th, table.prices td {
+  padding: 14px var(--s-3);
+  text-align: left;
+  border-bottom: 1px solid var(--line);
+}
+table.prices thead th {
+  font-family: var(--font-display); font-size: 14px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: .08em; color: var(--ink-2);
+  background: var(--surface-2);
+}
+table.prices tbody tr:last-child td { border-bottom: 0; }
+table.prices tbody tr:nth-child(even) { background: rgba(243,237,225,.5); }
+table.prices .price {
+  /* Длинные цены («от 300 ₽, точная цена после диагностики») обязаны
+     переноситься — на 375px nowrap обрезал текст */
+  white-space: normal;
+  overflow-wrap: break-word;
+  font-family: var(--font-display); font-weight: 600;
+  color: var(--accent-ink);
+}
+table.prices .term { white-space: nowrap; color: var(--ink-2); font-size: 16px; }
+table.prices th, table.prices td { overflow-wrap: break-word; }
+table.prices .svc { font-weight: 500; }
+/* Срок под названием услуги: на телефоне 3 столбца не помещаются,
+   а срок обязан быть виден у каждой позиции (ТЗ, раздел 5.2) */
+table.prices .svc .term { display: block; font-size: 15px; color: var(--ink-2); font-weight: 400; margin-top: 2px; }
+table.prices .note-row td { color: var(--ink-2); font-size: 16px; background: var(--surface-2); }
+
+.table-hint { margin-top: var(--s-3); font-size: 16.5px; color: var(--ink-2); }
+.table-hint::before { content: "💡 "; }
+
+/* --- 9. ЯКОРНОЕ МЕНЮ (чипы) --------------------------------------------- */
+.chips {
+  display: flex; gap: var(--s-2);
+  overflow-x: auto; padding-bottom: var(--s-2);
+  scrollbar-width: thin;
+  -webkit-overflow-scrolling: touch;
+}
+.chip {
+  flex: none;
+  display: inline-flex; align-items: center;
+  min-height: 44px; padding: 8px 18px;
+  border-radius: var(--radius-pill);
+  border: 1.5px solid var(--line-2);
+  background: var(--surface);
+  font-family: var(--font-display); font-weight: 500; font-size: 16px;
+  color: var(--ink); text-decoration: none;
+  transition: background-color .15s ease, border-color .15s ease;
+}
+.chip:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+
+/* --- 10. БЛОКИ-РАЗДЕЛЫ КАТАЛОГА ----------------------------------------- */
+.catalog-section { padding-block: var(--s-6); border-top: 1px solid var(--line); }
+.catalog-section:first-of-type { border-top: 0; }
+.catalog-lead { font-size: 18.5px; color: var(--ink-2); margin-bottom: var(--s-4); max-width: 70ch; }
+
+/* Оффер-строка раздела */
+.offer-line {
+  display: flex; align-items: flex-start; gap: var(--s-3);
+  background: var(--accent-bg);
+  border: 1px solid rgba(213,58,32,.22);
+  border-radius: var(--radius);
+  padding: var(--s-3) var(--s-4);
+  margin: var(--s-4) 0;
+  font-size: 17.5px;
+  color: var(--accent-ink);
+  font-weight: 500;
+}
+.offer-line::before { content: "★"; flex: none; font-size: 19px; }
+
+/* Честная оговорка */
+.honest-note {
+  border-left: 4px solid var(--ink);
+  background: var(--surface-2);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  padding: var(--s-3) var(--s-4);
+  margin: var(--s-4) 0;
+  font-size: 16.5px;
+}
+.honest-note b { font-family: var(--font-display); }
+
+/* --- 11. ПАКЕТЫ --------------------------------------------------------- */
+.packages-grid { display: grid; gap: var(--s-3); }
+@media (min-width: 700px)  { .packages-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1000px) { .packages-grid { grid-template-columns: repeat(3, 1fr); } }
+
+.package { display: flex; flex-direction: column; }
+.package-name { font-family: var(--font-display); font-weight: 700; font-size: 21px; margin-bottom: var(--s-2); }
+.package-in { font-size: 16.5px; color: var(--ink-2); margin: 0 0 var(--s-3); flex: 1; }
+.package-price-row { display: flex; align-items: baseline; gap: var(--s-3); flex-wrap: wrap; }
+.package-price { font-family: var(--font-display); font-weight: 800; font-size: 28px; color: var(--accent-ink); }
+.package-old { font-size: 16px; color: var(--ink-2); text-decoration: line-through; }
+
+/* --- 12. ФОРМА ---------------------------------------------------------- */
+.form-card { max-width: 640px; }
+.field { margin-bottom: var(--s-4); }
+.field label {
+  display: block;
+  font-family: var(--font-display); font-weight: 600; font-size: 16.5px;
+  margin-bottom: var(--s-2);
+}
+.field label .opt { font-weight: 400; color: var(--ink-2); font-size: 15px; }
+.field input[type="text"], .field input[type="tel"], .field textarea {
+  width: 100%;
+  min-height: 56px;
+  padding: 14px 16px;
+  border: 1.5px solid var(--line-2);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  font-family: var(--font-body); font-size: 17px; color: var(--ink);
+}
+.field textarea { min-height: 120px; resize: vertical; }
+.field input:focus-visible, .field textarea:focus-visible {
+  outline: 3px solid var(--accent); outline-offset: 1px; border-color: transparent;
+}
+.field .hint { display: block; margin-top: 6px; font-size: 15px; color: var(--ink-2); }
+
+.checkbox { display: flex; gap: 12px; align-items: flex-start; margin-bottom: var(--s-4); }
+.checkbox input { width: 24px; height: 24px; margin-top: 2px; flex: none; accent-color: var(--wa); }
+.checkbox label { font-size: 16px; line-height: 1.45; }
+.checkbox a { color: var(--accent-ink); }
+
+.form-note { margin-top: var(--s-3); font-size: 14.5px; color: var(--ink-2); }
+
+/* --- 13. ЦИФРОВЫЕ УСЛУГИ (акцентный фон) -------------------------------- */
+.digital {
+  background: var(--ink);
+  color: var(--paper);
+  position: relative;
+}
+.digital::before { content: ""; position: absolute; top: 0; left: 0; right: 0; }
+.digital h2 { color: #fff; }
+.digital .section-sub { color: rgba(251,247,240,.75); }
+
+.digital-grid { display: grid; gap: var(--s-3); }
+@media (min-width: 700px)  { .digital-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1000px) { .digital-grid { grid-template-columns: repeat(4, 1fr); } }
+
+.digital-card {
+  background: rgba(251,247,240,.07);
+  border: 1px solid rgba(251,247,240,.16);
+  border-radius: var(--radius);
+  padding: var(--s-4);
+  display: flex; flex-direction: column; gap: var(--s-2);
+}
+.digital-icon { font-size: 28px; line-height: 1; }
+.digital-card h3 { font-size: 19px; color: #fff; margin: 0; }
+.digital-card p { font-size: 16px; color: rgba(251,247,240,.75); margin: 0; flex: 1; }
+.digital-price {
+  font-family: var(--font-display); font-weight: 700; font-size: 20px;
+  color: var(--cmyk-y);
+}
+
+/* --- 14. АДРЕС / КАРТА -------------------------------------------------- */
+.location-grid { display: grid; gap: var(--s-4); }
+@media (min-width: 900px) { .location-grid { grid-template-columns: 1fr 1.2fr; align-items: stretch; } }
+
+.map-frame {
+  border: 1px solid var(--line); border-radius: var(--radius);
+  overflow: hidden; background: var(--surface-2);
+  min-height: 320px; height: 100%;
+  display: grid; place-items: center; text-align: center;
+  color: var(--ink-2); font-size: 16px; padding: var(--s-4);
+}
+
+.fact-list { list-style: none; margin: 0 0 var(--s-4); padding: 0; }
+.fact-list li {
+  display: flex; gap: var(--s-3); align-items: flex-start;
+  padding: 14px 0; border-bottom: 1px solid var(--line);
+  font-size: 17.5px;
+}
+.fact-list li:last-child { border-bottom: 0; }
+.fact-ico { flex: none; width: 26px; text-align: center; }
+.fact-list b { display: block; font-family: var(--font-display); font-weight: 600; }
+.fact-list span { color: var(--ink-2); font-size: 16.5px; }
+
+/* --- 15. ПОДВАЛ --------------------------------------------------------- */
+.footer {
+  background: var(--surface-2);
+  border-top: 1px solid var(--line);
+  padding-block: var(--s-6) var(--s-5);
+  font-size: 16.5px;
+}
+.footer-grid { display: grid; gap: var(--s-5); }
+@media (min-width: 800px) { .footer-grid { grid-template-columns: 1.2fr 1fr 1fr; } }
+.footer h4 {
+  font-size: 14px; text-transform: uppercase; letter-spacing: .1em;
+  color: var(--ink-2); margin-bottom: var(--s-3);
+}
+.footer ul { list-style: none; margin: 0; padding: 0; }
+.footer li { margin-bottom: 10px; }
+.footer a { color: var(--ink); text-decoration: none; }
+.footer a:hover { color: var(--accent-ink); }
+.footer-bottom {
+  margin-top: var(--s-5); padding-top: var(--s-4);
+  border-top: 1px solid var(--line-2);
+  display: flex; flex-wrap: wrap; gap: var(--s-3) var(--s-5);
+  font-size: 15px; color: var(--ink-2);
+}
+
+/* --- 16. ЛЕНДИНГ-СПЕЦИФИКА --------------------------------------------- */
+.landing-hero .hero-price {
+  font-family: var(--font-display); font-weight: 800;
+  font-size: clamp(40px, 10vw, 72px);
+  color: var(--accent-ink);
+  line-height: 1;
+  margin-bottom: var(--s-3);
+}
+.trust-grid { display: grid; gap: var(--s-3); }
+@media (min-width: 760px) { .trust-grid { grid-template-columns: repeat(3, 1fr); } }
+.trust-card h3 { font-size: 19px; margin-bottom: 6px; }
+.trust-card p { margin: 0; font-size: 16.5px; color: var(--ink-2); }
+.trust-card { text-align: left; }
+.trust-ico { font-size: 26px; margin-bottom: var(--s-2); }
+
+/* FAQ-аккордеон (возражения) */
+.faq details {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  margin-bottom: var(--s-2);
+  overflow: hidden;
+}
+.faq summary {
+  cursor: pointer; list-style: none;
+  padding: 18px var(--s-4);
+  min-height: 56px;
+  font-family: var(--font-display); font-weight: 600; font-size: 18px;
+  display: flex; justify-content: space-between; align-items: center; gap: var(--s-3);
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; font-size: 24px; color: var(--accent-ink); flex: none; }
+.faq details[open] summary::after { content: "–"; }
+.faq details p { padding: 0 var(--s-4) var(--s-4); margin: 0; font-size: 16.5px; color: var(--ink-2); }
+
+/* Якорный скролл под липкой шапкой */
+[id] { scroll-margin-top: 84px; }
+
+/* --- 17. ЭТАП 3: Яндекс.Карта в iframe ----------------------------------- */
+.map-frame-iframe { padding: 0; display: block; }
+.map-frame-iframe iframe { width: 100%; height: 100%; min-height: 320px; border: 0; display: block; }
+/* Тёмная секция /digital: заголовки и «проверка» должны оставаться светлыми */
+.digital h1, .digital .hero-reassure::before { color: #fff; }
+
+/* --- 17а. ЭТАП 3: хлебные крошки на вложенных страницах ------------------- */
+.breadcrumb { font-size: 15px; color: var(--ink-2); }
+.breadcrumb a { color: var(--ink-2); text-decoration: none; }
+.breadcrumb a:hover { color: var(--accent-ink); }
+.breadcrumb span[aria-current] { color: var(--ink); }
+
+/* Печать: скрыть интерактив */
+@media print { .btn, .header-actions, .chips { display: none !important; } }
